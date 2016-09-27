@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react'; // reference libraries inside the node_modules directory
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
@@ -32,9 +33,14 @@ class App extends Component {
   }
 
   render() {
+    // debounce returns a version of the same function that can only be called
+    // once every x milliseconds (the second argument).
+    // We can call it as much as we want, but it will only run the function once
+    // every period.
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300); // rate throttling
     return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={selectedVideo => this.setState({selectedVideo})}
