@@ -12,18 +12,26 @@ class SearchBar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { term: '' };
+    this.state = { term: 'Starting value' };
   }
 
   // This is how we define functions in JS classes.
   // All React.Components must have a render() function.
   render() {
-    return <input onChange={event => console.log(event.target.value)} />;
+    return (
+      <div>
+        <input
+          value={this.state.term} // input is a Controlled component - the state tells
+                                  // it what the value should be, not the user input
+                                  // user input > update state > set value of component
+          onChange={event => this.setState({ term: event.target.value })} />
+      </div>
+    );
     // equaivalent to:
     // return <input onChange={(event) => { console.log(event.target.value); }} />;
 
     // could also use a class method:
-    // return <input onChange={onInputChange} />
+    // return <input onChange={this.onInputChange} />
     // onInputChange(event) { console.log(event.target.value); }
   }
 }
